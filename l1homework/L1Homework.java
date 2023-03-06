@@ -6,7 +6,7 @@ package l1homework;
 
 /**
  *
- * @author dhuum
+ * @author DanBizu
  */
 public class L1Homework {
 
@@ -21,24 +21,36 @@ public class L1Homework {
         }
 
         // Validation
+        int n;
         try {
-            int n = Integer.parseInt(args[0]);
+            n = Integer.parseInt(args[0]);
+            System.out.println(n);
+            LatinSquare ls = new LatinSquare(n);
+            if (n < 1000) {
+                ls.printByLine();
+            }
+            
         } catch (NumberFormatException e) {
             System.out.println("Argument must be an integer");
             System.exit(-1);
         }
-
-        int n = Integer.parseInt(args[0]);
-        System.out.println(n);
     }
 
-    private class LatinSquare {
-        private int n;
+    private static class LatinSquare {
+        private final int n;
         int[][] matrix;
         
         LatinSquare(int n) {
             this.n = n;
+            long t1 = 0;
+            if (n >= 10_000) {
+                t1 = System.currentTimeMillis();
+            }
             matrix = createLatinSquare(n);
+            if (n >= 10_000) {
+                long t2 = System.currentTimeMillis();
+                System.out.println("Creation took: " + (t2 - t1));
+            }
         }
 
         public static int[][] createLatinSquare(int n) {
@@ -61,6 +73,9 @@ public class L1Homework {
             for (int i = 0; i < this.n; i++) {
                 for (int j = 0; j < this.n; j++) {
                     line.append(matrix[i][j]);
+                    if (j - 1 < this.n) {
+                        line.append(" ");
+                    }
                 }
                 System.out.println("Line:" + i);
                 System.out.println(line);
